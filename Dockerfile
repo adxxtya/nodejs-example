@@ -1,18 +1,20 @@
-FROM node:18
+FROM node:16
 
-# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# Copying all the files from your file system to container file system
 COPY package.json .
 
-# USER node
-
+# Install all dependencies
 RUN npm install
 
-COPY . .
-# COPY --chown=node:node . .
+# Copy other files too
+COPY ./ .
 
+# Expose the port
 EXPOSE 8080
 
-CMD [ "node", "app.js" ]
+# Command to run app when intantiate an image
+CMD ["npm","start"]
